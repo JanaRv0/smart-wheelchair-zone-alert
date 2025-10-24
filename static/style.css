@@ -1,0 +1,64 @@
+﻿/* General page styling */
+body {
+    background-color: #f0f2f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container box */
+.container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Headings */
+h2 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    table th, table td {
+        padding: 12px 16px;
+        border: 1px solid #dee2e6;
+        text-align: center;
+    }
+
+    table th {
+        background-color: #343a40;
+        color: #ffffff;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+/* Alert box for zone display */
+#zoneDisplay {
+    font-size: 1.4em;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+
+    table th, table td {
+        font-size: 0.9em;
+        padding: 10px;
+    }
+}

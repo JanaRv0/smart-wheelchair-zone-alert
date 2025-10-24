@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wheelchair Zone Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            background-color: #f0f2f5;
+            padding-top: 40px;
+        }
+
+        .dashboard-box {
+            max-width: 800px;
+            margin: auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="dashboard-box">
+            <h2 class="mb-4 text-center">📊 Wheelchair Zone Dashboard</h2>
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Wheelchair ID</th>
+                        <th>Current Zone</th>
+                    </tr>
+                </thead>
+                <tbody id="zoneTableBody">
+                    <tr><td colspan="2">Loading data...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+    function fetchAllLocations() {
+      fetch('/api/locations')
+        .then(response => response.json())
+        .then(data => {
+          const tbody = document.getElementById("zoneTableBody");
+          tbody.innerHTML = "";
+
+          if (data.length === 0) {
+            tbody.innerHTML = "<tr><td colspan='2'>No data available</td></tr>";
+            return;
+          }
+
+          data.forEach(item => {
+            const row = document.createElement("tr");
+            row.innerHTML = `<td>${item.wheelchair_id}</td><td>${item.zone}</td>`;
+            tbody.appendChild(row);
+          });
+        })
+        .catch(error => {
+          console.error("Error fetching locations:", error);
+          document.getElementById("zoneTableBody").innerHTML = "<tr><td colspan='2'>Error loading data</td></tr>";
+        });
+    }
+
+    fetchAllLocations();
+    setInterval(fetchAllLocations, 10000); // Refresh every 10 seconds
+    </script>
+</body>
+</html>

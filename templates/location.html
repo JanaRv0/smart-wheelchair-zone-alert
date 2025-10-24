@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wheelchair Location</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 50px;
+        }
+
+        .location-box {
+            max-width: 500px;
+            margin: auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="location-box text-center">
+            <h2 class="mb-4">📍 Wheelchair Location</h2>
+            <p><strong>ID:</strong> <span id="wheelchairId">{{ wheelchair_id }}</span></p>
+            <p><strong>Current Zone:</strong> <span id="zoneDisplay">Loading...</span></p>
+        </div>
+    </div>
+
+    <script>
+    const wheelchairId = "{{ wheelchair_id }}";
+    const apiURL = `/api/location/${wheelchairId}`;
+
+    function fetchLocation() {
+      fetch(apiURL)
+        .then(response => response.json())
+        .then(data => {
+          if (data.zone) {
+            document.getElementById("zoneDisplay").innerText = data.zone;
+          } else {
+            document.getElementById("zoneDisplay").innerText = "Zone not found";
+          }
+        })
+        .catch(error => {
+          document.getElementById("zoneDisplay").innerText = "Error fetching location";
+          console.error("Fetch error:", error);
+        });
+    }
+
+    fetchLocation();
+    setInterval(fetchLocation, 10000); // Refresh every 10 seconds
+    </script>
+</body>
+</html>
